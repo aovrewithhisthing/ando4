@@ -8,15 +8,22 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width=""
-        android:layout_height="" />
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:hint="Masukkan Pesan Anda"
+        android:layout_alignParebtBottom="true"
+        android:layout_toLeftOf="@id/button"/>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEND"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="openSecondActivity"/>
 
     <TextView
         android:layout_width="wrap_content"
