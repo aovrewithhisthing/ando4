@@ -4,26 +4,90 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E8EFE8"
+    android:padding="12dp"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/editText"
-        android:inputType="text"
+    <!-- HEADER: Bar Atas ala Layar HP Jadul -->
+    <TextView
+        android:id="@+id/text_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="name"
-        android:hint="Masukkan Pesan Anda"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/button"/>
+        android:layout_alignParentTop="true"
+        android:background="#2C3E35"
+        android:fontFamily="monospace"
+        android:padding="10dp"
+        android:text="[INBOX: Alek]          [Omong Dewe Lur]"
+        android:textColor="#D8E2D8"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
+    <!-- AREA LOG PESAN: Menggunakan ScrollView agar efisien jika chat panjang -->
+    <ScrollView
+        android:id="@+id/scroll_log"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/divider_bottom"
+        android:layout_below="@id/text_header"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#D8E2D8"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="6dp"
+            android:text="--- Riwayat SMS Kosong ---"
+            android:textColor="#1C2826"
+            android:textSize="14sp" />
+    </ScrollView>
+
+    <!-- GARIS PEMBATAS RETRO -->
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@id/button"
+        android:layout_marginBottom="8dp"
+        android:background="#2C3E35" />
+
+    <!-- INPUT PESAN: Tetap sesuai ID di modul (editText) -->
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toStartOf="@id/button"
+        android:layout_toLeftOf="@id/button"
+        android:background="#FFFFFF"
+        android:fontFamily="monospace"
+        android:hint="Ketik SMS..."
+        android:inputType="textCapSentences"
+        android:minHeight="48dp"
+        android:padding="10dp"
+        android:textColor="#1C2826"
+        android:textColorHint="#7A8B82"
+        android:textSize="14sp" />
+
+    <!-- TOMBOL KIRIM: Tetap sesuai ID & onClick di modul (button & openSecondActivity) -->
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SEND"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:onClick="openSecondActivity"/>
+        android:backgroundTint="#2C3E35"
+        android:fontFamily="monospace"
+        android:minHeight="48dp"
+        android:onClick="openSecondActivity"
+        android:text="SEND"
+        android:textColor="#D8E2D8"
+        android:textStyle="bold" />
 
 </RelativeLayout>
-

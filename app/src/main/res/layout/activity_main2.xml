@@ -1,27 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E8EFE8"
+    android:padding="12dp"
     tools:context=".MainActivity2">
-    
+
+    <!-- HEADER: Bar Atas ala Layar HP Jadul (Activity 2) -->
     <TextView
-        android:id="@+id/textHeader"
-        android:layout_width="wrap_content"
+        android:id="@+id/text_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pesan diterima"
+        android:layout_alignParentTop="true"
+        android:background="#2C3E35"
+        android:fontFamily="monospace"
+        android:padding="10dp"
+        android:text="[INBOX: Anto]          [Omong Dewe Lur]"
+        android:textColor="#D8E2D8"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textMessage"
-        android:layout_below="@id/textHeader"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="12dp"
+    <!-- AREA LOG PESAN: Menampilkan riwayat pesan yang diterima -->
+    <ScrollView
+        android:id="@+id/scroll_log_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/divider_bottom_second"
+        android:layout_below="@id/text_header"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#D8E2D8"
+        android:padding="10dp">
+
+        <!-- ID tetap menggunakan text_message sesuai modul -->
+        <TextView
+            android:id="@+id/text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="6dp"
+            android:text="Pesan diterima"
+            android:textColor="#1C2826"
+            android:textSize="14sp" />
+    </ScrollView>
+
+    <!-- GARIS PEMBATAS RETRO -->
+    <View
+        android:id="@+id/divider_bottom_second"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@id/button_second"
+        android:layout_marginBottom="8dp"
+        android:background="#2C3E35" />
+
+    <!-- INPUT BALASAN PESAN -->
+    <EditText
+        android:id="@+id/editText_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toStartOf="@id/button_second"
+        android:layout_toLeftOf="@id/button_second"
+        android:background="#FFFFFF"
+        android:fontFamily="monospace"
+        android:hint="Balas SMS..."
+        android:inputType="textCapSentences"
+        android:minHeight="48dp"
+        android:padding="10dp"
+        android:textColor="#1C2826"
+        android:textColorHint="#7A8B82"
+        android:textSize="14sp" />
+
+    <!-- TOMBOL BALAS (SEND) -->
+    <Button
+        android:id="@+id/button_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pesan diterima" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="#2C3E35"
+        android:fontFamily="monospace"
+        android:minHeight="48dp"
+        android:onClick="replyMessage"
+        android:text="REPLY"
+        android:textColor="#D8E2D8"
+        android:textStyle="bold" />
 
 </RelativeLayout>
