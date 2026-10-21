@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="name"
         android:hint="Masukkan Pesan Anda"
-        android:layout_alignParebtBottom="true"
+        android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/button"/>
 
     <Button
@@ -24,14 +24,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:onClick="openSecondActivity"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Let's shop for food" />
-
-
-
 
 </RelativeLayout>
 
