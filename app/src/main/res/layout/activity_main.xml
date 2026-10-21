@@ -17,7 +17,7 @@
         android:background="#2C3E35"
         android:fontFamily="monospace"
         android:padding="10dp"
-        android:text="[INBOX: Alek]          [Omong Dewe Lur]"
+        android:text="[INBOX: Anto]          [Omong Dewe Lur]"
         android:textColor="#D8E2D8"
         android:textSize="14sp"
         android:textStyle="bold" />
