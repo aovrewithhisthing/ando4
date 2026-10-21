@@ -2,23 +2,33 @@ package com.example.pro4;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.TextView;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity2 extends AppCompatActivity {
 
     private EditText editTextSecond;
-    private TextView textMessage;
-    private ScrollView scrollLogSecond;
-    private StringBuilder messageLog = new StringBuilder();
+    private RecyclerView recyclerViewSecond;
+    private ChatAdapter chatAdapter;
+    private final List<ChatMessage> messageList = new ArrayList<>();
+
+    private String currentUser = "Anto";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +37,21 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         editTextSecond = findViewById(R.id.editText_second);
-        textMessage = findViewById(R.id.text_message);
-        scrollLogSecond = findViewById(R.id.scroll_log_second);
+        recyclerViewSecond = findViewById(R.id.recycler_messages_second);
+        Button btnBurger = findViewById(R.id.btn_burger_second);
+        Button btnSend = findViewById(R.id.button_second);
+        Button btnBack = findViewById(R.id.button_back_main);
+
+        String passedUser = getIntent().getStringExtra("CURRENT_USER");
+        if (passedUser != null && !passedUser.isEmpty()) {
+            currentUser = passedUser;
+        }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
+        recyclerViewSecond.setLayoutManager(layoutManager);
+        chatAdapter = new ChatAdapter(messageList);
+        recyclerViewSecond.setAdapter(chatAdapter);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets barsAndIme = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.ime());
@@ -39,40 +62,67 @@ public class MainActivity2 extends AppCompatActivity {
                 barsAndIme.right + padding12,
                 barsAndIme.bottom + padding12
             );
-            scrollLogSecond.post(() -> scrollLogSecond.fullScroll(View.FOCUS_DOWN));
+            scrollToBottom();
             return WindowInsetsCompat.CONSUMED;
         });
 
-        editTextSecond.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                scrollLogSecond.postDelayed(() -> scrollLogSecond.fullScroll(View.FOCUS_DOWN), 200);
-            }
+        btnBurger.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(MainActivity2.this, btnBurger);
+            popup.getMenu().add("Peran: Anto");
+            popup.getMenu().add("Peran: Alek");
+            popup.setOnMenuItemClickListener(item -> {
+                if (item.getTitle().toString().contains("Alek")) {
+                    currentUser = "Alek";
+                    Toast.makeText(this, "Berpindah peran ke Alek", Toast.LENGTH_SHORT).show();
+                } else {
+                    currentUser = "Anto";
+                    Toast.makeText(this, "Berpindah peran ke Anto", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            });
+            popup.show();
         });
 
         Intent intent = getIntent();
         if (intent != null) {
-            String log = intent.getStringExtra(MainActivity.EXTRA_LOG);
-            if (log != null && !log.isEmpty()) {
-                messageLog = new StringBuilder(log);
+            List<ChatMessage> passedList = (List<ChatMessage>) intent.getSerializableExtra(MainActivity.EXTRA_CHAT_LIST);
+            if (passedList != null) {
+                messageList.clear();
+                for (ChatMessage msg : passedList) {
+                    boolean isMine = msg.getSender().equals(currentUser);
+                    messageList.add(new ChatMessage(msg.getSender(), msg.getMessage(), msg.getTimestamp(), isMine));
+                }
+                chatAdapter.notifyDataSetChanged();
+                scrollToBottom();
             }
-            textMessage.setText(messageLog.toString());
-            scrollLogSecond.post(() -> scrollLogSecond.fullScroll(View.FOCUS_DOWN));
+        }
+
+        btnSend.setOnClickListener(v -> sendReply());
+
+        btnBack.setOnClickListener(v -> returnToMain());
+    }
+
+    private void sendReply() {
+        String replyText = editTextSecond.getText().toString().trim();
+        if (!replyText.isEmpty()) {
+            String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+            messageList.add(new ChatMessage(currentUser, replyText, time, true));
+            chatAdapter.notifyItemInserted(messageList.size() - 1);
+            scrollToBottom();
+            editTextSecond.setText("");
         }
     }
 
-    public void replyMessage(View view) {
-        String reply = editTextSecond.getText().toString().trim();
-        if (!reply.isEmpty()) {
-            if (messageLog.length() > 0) {
-                messageLog.append("\n");
-            }
-            messageLog.append("Anto: ").append(reply);
+    private void returnToMain() {
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra(MainActivity.EXTRA_CHAT_LIST, (ArrayList<ChatMessage>) messageList);
+        setResult(RESULT_OK, replyIntent);
+        finish();
+    }
 
-            Intent replyIntent = new Intent();
-            replyIntent.putExtra(MainActivity.EXTRA_REPLY, reply);
-            replyIntent.putExtra(MainActivity.EXTRA_LOG, messageLog.toString());
-            setResult(RESULT_OK, replyIntent);
-            finish();
+    private void scrollToBottom() {
+        if (!messageList.isEmpty()) {
+            recyclerViewSecond.scrollToPosition(messageList.size() - 1);
         }
     }
 }

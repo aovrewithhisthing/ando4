@@ -8,87 +8,112 @@
     android:padding="12dp"
     tools:context=".MainActivity2">
 
-    <!-- HEADER: Bar Atas ala Layar HP Jadul (Activity 2) -->
-    <TextView
-        android:id="@+id/text_header"
+    <!-- HEADER: Bar Atas (Activity 2) -->
+    <LinearLayout
+        android:id="@+id/header_layout_second"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="#2C3E35"
-        android:fontFamily="monospace"
-        android:padding="10dp"
-        android:text="[INBOX: Alek]          [Omong Dewe Lur]"
-        android:textColor="#D8E2D8"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp">
 
-    <!-- AREA LOG PESAN: Menampilkan riwayat pesan yang diterima -->
-    <ScrollView
-        android:id="@+id/scroll_log_second"
+        <TextView
+            android:id="@+id/text_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:text="Alek          [Omong Dewe Lur]"
+            android:textColor="#D8E2D8"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_burger_second"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:backgroundTint="#3B5347"
+            android:fontFamily="monospace"
+            android:text="☰ Menu"
+            android:textColor="#D8E2D8"
+            android:textSize="12sp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingHorizontal="10dp" />
+    </LinearLayout>
+
+    <!-- RecyclerView for Chat Messages -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_messages_second"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/divider_bottom_second"
-        android:layout_below="@id/text_header"
+        android:layout_below="@id/header_layout_second"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#D8E2D8"
-        android:padding="10dp">
+        android:background="#EFEFEF"
+        android:padding="8dp"
+        tools:listitem="@layout/item_message_received" />
 
-        <!-- ID tetap menggunakan text_message sesuai modul -->
-        <TextView
-            android:id="@+id/text_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:lineSpacingExtra="6dp"
-            android:text="Pesan diterima"
-            android:textColor="#1C2826"
-            android:textSize="14sp" />
-    </ScrollView>
-
-    <!-- GARIS PEMBATAS RETRO -->
+    <!-- GARIS PEMBATAS -->
     <View
         android:id="@+id/divider_bottom_second"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_above="@id/button_second"
+        android:layout_above="@id/layout_bottom_second"
         android:layout_marginBottom="8dp"
         android:background="#2C3E35" />
 
-    <!-- INPUT BALASAN PESAN -->
-    <EditText
-        android:id="@+id/editText_second"
+    <!-- BOTTOM INPUT & BUTTONS -->
+    <LinearLayout
+        android:id="@+id/layout_bottom_second"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_toStartOf="@id/button_second"
-        android:layout_toLeftOf="@id/button_second"
-        android:background="#FFFFFF"
-        android:fontFamily="monospace"
-        android:hint="Balas SMS..."
-        android:inputType="textCapSentences"
-        android:minHeight="48dp"
-        android:padding="10dp"
-        android:textColor="#1C2826"
-        android:textColorHint="#7A8B82"
-        android:textSize="14sp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <!-- TOMBOL BALAS (SEND) -->
-    <Button
-        android:id="@+id/button_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:backgroundTint="#2C3E35"
-        android:fontFamily="monospace"
-        android:minHeight="48dp"
-        android:onClick="replyMessage"
-        android:text="REPLY"
-        android:textColor="#D8E2D8"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/editText_second"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:background="#FFFFFF"
+            android:fontFamily="monospace"
+            android:hint="Ketik balasan..."
+            android:inputType="textCapSentences"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textColor="#1C2826"
+            android:textColorHint="#7A8B82"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/button_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:backgroundTint="#2C3E35"
+            android:fontFamily="monospace"
+            android:minHeight="48dp"
+            android:text="SEND"
+            android:textColor="#D8E2D8"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_back_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4A6B5B"
+            android:fontFamily="monospace"
+            android:minHeight="48dp"
+            android:text="BACK"
+            android:textColor="#D8E2D8"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </RelativeLayout>
